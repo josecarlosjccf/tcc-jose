@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Dados com Gemini</title>
+    
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>TCC - José Carlos</h1>
+        </nav>
+    </header>
+
+    <main>
+        <form action="/analisar" method="POST" enctype="multipart/form-data">
+            
+            <div class="input-group">
+                <label for="file_upload">Arquivo (.csv, .xlsx):</label>
+                <input type="file" id="file_upload" name="file" accept=".csv, .xlsx" required>
+            </div>
+
+            <div class="input-group">
+                <label for="prompt_text">Instrução para a IA:</label>
+                <textarea id="prompt_text" name="prompt" rows="5" maxlength="1000" placeholder="Digite aqui o que você quer que a IA analise na planilha..." required></textarea>
+                <div class="contador">
+                    <span id="char_count">0</span> / 1000
+                </div>
+            </div>
+
+            <button type="submit">Analisar Dados</button>
+            
+        </form>
+    </main>
+
+    <footer>
+        <p>Sistemas de Informação - 2026</p>
+    </footer>
+
+    <script>
+        const textarea = document.getElementById('prompt_text');
+        const charCount = document.getElementById('char_count');
+        const limite = 1000;
+
+        textarea.addEventListener('input', function() {
+            const tamanhoAtual = this.value.length;
+            charCount.textContent = tamanhoAtual;
+            
+            // Fica vermelho se atingir o limite máximo
+            if (tamanhoAtual >= limite) {
+                charCount.style.color = "red";
+                charCount.style.fontWeight = "bold";
+            } else {
+                charCount.style.color = "#666";
+                charCount.style.fontWeight = "normal";
+            }
+        });
+    </script>
+</body>
+</html>

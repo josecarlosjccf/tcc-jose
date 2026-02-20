@@ -1,3 +1,26 @@
+# Ambientes Virtuais
+venv/
+env/
+.venv/
+
+# Variáveis de Ambiente (CHAVES DE API)
 .env
-.class
-.log
+
+# Pastas de dados dinâmicos da aplicação
+uploads/
+outputs/
+*.csv
+*.xlsx
+*.html # Ignorar relatórios gerados na raiz ou pastas não mapeadas
+
+# Arquivos compilados do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebooks / Colab (caso crie arquivos de teste)
+.ipynb_checkpoints/
+
+# SO
+.DS_Store
+Thumbs.db
