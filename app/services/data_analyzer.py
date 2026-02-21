@@ -1,18 +1,16 @@
 import pandas as pd
 import re
 from google import genai
-# IMPORTANTE: Importamos o 'types' para ter acesso às configurações de hiperparâmetros (como a temperatura)
 from google.genai import types  
 from app.services.prompt_builder import construir_prompt_mestre
 
 class DataAnalyzer:
     def __init__(self, api_key: str, versao_modelo: str):
-        # Inicializa a conexão com o Google Gemini usando a chave do .env
         self.client = genai.Client(api_key=api_key)
         self.model_name = f'gemini-{versao_modelo}-flash'
 
     def carregar_planilha(self, caminho_arquivo: str):
-        # IMPORTANTE: Módulo de Data Wrangling. O Pandas lê o arquivo e transforma em um DataFrame (tabela).
+        # Data Wrangling: Lê o arquivo e normaliza o nome das colunas
         if caminho_arquivo.lower().endswith(('.csv', '.txt')):
             df = pd.read_csv(caminho_arquivo)
         elif caminho_arquivo.lower().endswith(('.xlsx', '.xls')):
@@ -20,12 +18,11 @@ class DataAnalyzer:
         else:
             raise ValueError("Formato de arquivo não suportado.")
             
-        # Limpa o nome das colunas para evitar erros de leitura da IA
         df.columns = [str(col).strip().replace('\n', ' ') for col in df.columns]
         return df
 
     def limpar_markdown_para_html(self, texto_markdown: str) -> str:
-        # Pega a resposta pura da IA (Markdown) e converte em tags HTML (<h2>, <p>, <strong>)
+        # Converte a resposta estruturada em Markdown para tags HTML
         match_start = re.search(r'(SEÇÃO 1: .*?)', texto_markdown, re.DOTALL)
         html = texto_markdown[match_start.start():] if match_start else texto_markdown
             
@@ -42,26 +39,23 @@ class DataAnalyzer:
         return '\n'.join(blocos_finais)
 
     def analisar_dados(self, df, instrucao_usuario: str, instrucoes_extras: str = ""):
-        # Transforma o DataFrame do Pandas em texto (Markdown) para a IA conseguir "ler" a tabela
-        amostra_head = df.head().to_markdown(index=False)
-        info_dados = f"Dimensão: {df.shape[0]} linhas x {df.shape[1]} colunas."
-        amostra_completa = df.to_string(index=False, max_rows=50)
+        amostra_head = df.head(5).to_csv(index=False)
+        info_dados = f"Dimensão Total: {df.shape[0]} linhas x {df.shape[1]} colunas."
+        
+        # Converte todo o DataFrame para CSV, garantindo que a IA leia 100% dos dados
+        dados_completos = df.to_csv(index=False)
 
-        # Junta as amostras da planilha com a instrução digitada pelo usuário
         prompt = construir_prompt_mestre(
-            instrucao_usuario, info_dados, amostra_head, amostra_completa, instrucoes_extras
+            instrucao_usuario, info_dados, amostra_head, dados_completos, instrucoes_extras
         )
 
-        # IMPORTANTE: Comunicação com a API e Trava de Temperatura
+        # Chamada da API com trava Anti-Alucinação (temperature = 0.1)
         response = self.client.models.generate_content(
             model=self.model_name,
             contents=prompt,
             config=types.GenerateContentConfig(
-                # TRAVA DE SEGURANÇA: Temperatura 0.1 tira a "criatividade" do modelo.
-                # Ele fica 100% analítico, factual e focado nos dados, minimizando alucinações.
                 temperature=0.1  
             )
         )
         
-        # Converte a resposta gerada e a devolve para o routes.py jogar na tela web
         return self.limpar_markdown_para_html(response.text)

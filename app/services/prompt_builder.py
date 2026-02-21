@@ -1,18 +1,11 @@
-def construir_prompt_mestre(instrucao_usuario, info_dados, amostra_head, amostra_completa, instrucoes_extras=""):
-    """
-    Constrói o prompt estruturado que será enviado ao Gemini.
-    Separa a formatação das regras de negócio e aplica as travas de segurança.
-    """
-    
+def construir_prompt_mestre(instrucao_usuario, info_dados, amostra_head, dados_completos, instrucoes_extras=""):
+    # Aplica a técnica de Engenharia de Prompt com regras de Grounding (Ancoragem)
     prompt = f"""
     **CONTEXTO E REGRAS DE SEGURANÇA (GROUNDING):** Você é um Analista de Dados Profissional. 
     
-    # IMPORTANTE: A regra abaixo é a trava de ancoragem (Grounding). 
-    # Ela proíbe a IA de inventar dados (alucinar) e a obriga a usar apenas o que o Pandas leu.
-    REGRA MÁXIMA: Baseie-se EXCLUSIVAMENTE nos dados fornecidos abaixo. NUNCA invente nomes, números, métricas ou informações que não estejam na amostra. Se a resposta para a instrução do usuário não estiver nos dados, declare explicitamente: "Não há dados suficientes na planilha para responder a esta questão".
+    # REGRA MÁXIMA DE SEGURANÇA: 
+    # Baseie-se EXCLUSIVAMENTE nos dados fornecidos abaixo. NUNCA invente nomes, números, métricas ou informações que não estejam na base de dados. Se a resposta para a instrução do usuário não estiver nos dados, declare explicitamente: "Não há dados suficientes na planilha para responder a esta questão".
 
-    # IMPORTANTE: Forçar essa estrutura de 4 seções tira a liberdade criativa da IA
-    # e garante que o relatório sempre saia no mesmo padrão para o nosso HTML.
     **ESTRUTURA DE SAÍDA OBRIGATÓRIA:** Retorne um texto formatado em Markdown com as seguintes 4 seções. Use negrito **texto** e listas - para clareza:
 
     SEÇÃO 1: RESUMO EXECUTIVO DOS DADOS
@@ -23,17 +16,17 @@ def construir_prompt_mestre(instrucao_usuario, info_dados, amostra_head, amostra
     **INSTRUÇÕES DE CORREÇÃO E REGRAS EXTRAS:**
     {instrucoes_extras}
 
-    **DADOS BRUTOS ANALISADOS:**
+    **INFORMAÇÕES DOS DADOS BRUTOS:**
     {info_dados}
     
-    Amostra e Estrutura das Primeiras Linhas:
-    ```
+    Estrutura das Colunas:
+    ```csv
     {amostra_head}
     ```
     
-    Conteúdo Completo (Amostra):
-    ```
-    {amostra_completa}
+    **BASE DE DADOS COMPLETA PARA ANÁLISE:**
+    ```csv
+    {dados_completos}
     ```
 
     **INSTRUÇÃO DO USUÁRIO:**
