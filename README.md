@@ -102,6 +102,7 @@ pip install -r requirements.txt
 3. Cole o seguinte conteúdo no arquivo `.env`, substituindo pela sua chave real:
 
 GEMINI_API_KEY="COLE_AQUI_A_SUA_CHAVE_GERADA"
+
 GEMINI_VERSION="2.5"
 
 ⚠️ O arquivo `.env` nunca deve ser enviado para o GitHub por questões de segurança.
