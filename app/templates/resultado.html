@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Análise - TCC</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <h1>TCC - José Carlos</h1>
+        </nav>
+    </header>
+
+    <main>
+        <div class="relatorio-container">
+            <div class="relatorio-header">
+                <h2>Relatório Gerado pela IA</h2>
+                <a href="/" class="btn-voltar">⬅ Voltar e fazer nova análise</a>
+            </div>
+            
+            <div class="conteudo-ia">
+                {{ conteudo_relatorio | safe }}
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Sistemas de Informação - 2026</p>
+    </footer>
+
+</body>
+</html>

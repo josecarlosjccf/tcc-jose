@@ -4,58 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análise de Dados com Gemini</title>
-    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
-<body>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
 
-    <header>
-        <nav>
-            <h1>TCC - José Carlos</h1>
-        </nav>
-    </header>
+    <nav class="bg-indigo-700 text-white p-4 shadow-md">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wide">TCC - José Carlos</h1>
+            <span class="text-indigo-200 text-sm">Data Analyzer</span>
+        </div>
+    </nav>
 
-    <main>
-        <form action="/analisar" method="POST" enctype="multipart/form-data">
-            
-            <div class="input-group">
-                <label for="file_upload">Arquivo (.csv, .xlsx):</label>
-                <input type="file" id="file_upload" name="file" accept=".csv, .xlsx" required>
+    <main class="flex-grow flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl border border-gray-100">
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Análise de Planilhas com IA</h2>
+                <p class="text-gray-500 text-sm">Faça o upload do seu dataset e direcione o Gemini para extrair insights qualitativos.</p>
             </div>
 
-            <div class="input-group">
-                <label for="prompt_text">Instrução para a IA:</label>
-                <textarea id="prompt_text" name="prompt" rows="5" maxlength="1000" placeholder="Digite aqui o que você quer que a IA analise na planilha..." required></textarea>
-                <div class="contador">
-                    <span id="char_count">0</span> / 1000
+            <form action="/analisar" method="POST" enctype="multipart/form-data" class="space-y-6">
+                
+                <div>
+                    <label for="file_upload" class="block text-sm font-semibold text-gray-700 mb-2">
+                        1. Selecione a planilha (Apenas .csv ou .xlsx)
+                    </label>
+                    <input type="file" id="file_upload" name="file" accept=".csv, .xlsx" required
+                           class="block w-full text-sm text-gray-500
+                                  file:mr-4 file:py-2.5 file:px-4
+                                  file:rounded-md file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-indigo-50 file:text-indigo-700
+                                  hover:file:bg-indigo-100 transition-colors cursor-pointer">
                 </div>
-            </div>
 
-            <button type="submit">Analisar Dados</button>
-            
-        </form>
+                <div>
+                    <label for="prompt_text" class="block text-sm font-semibold text-gray-700 mb-2">
+                        2. Instrução para a IA
+                    </label>
+                    <textarea id="prompt_text" name="prompt" rows="3" maxlength="300" required
+                              placeholder="Ex: Analise as respostas às questões e com base nisso descreva como precisaria ser essa ferramenta."
+                              class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-none transition-all"></textarea>
+                    
+                    <div class="flex justify-end mt-1">
+                        <p class="text-xs text-gray-500 font-medium"><span id="char_count">0</span> / 300 caracteres</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-md hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 flex justify-center items-center">
+                    Gerar Relatório Analítico
+                </button>
+            </form>
+        </div>
     </main>
 
-    <footer>
-        <p>Sistemas de Informação - 2026</p>
+    <footer class="bg-gray-900 text-gray-300 text-center py-5 mt-auto">
+        <p class="text-sm">Sistemas de Informação - 2026</p>
     </footer>
 
     <script>
         const textarea = document.getElementById('prompt_text');
         const charCount = document.getElementById('char_count');
-        const limite = 1000;
 
         textarea.addEventListener('input', function() {
-            const tamanhoAtual = this.value.length;
-            charCount.textContent = tamanhoAtual;
+            const currentLength = this.value.length;
+            charCount.textContent = currentLength;
             
-            // Fica vermelho se atingir o limite máximo
-            if (tamanhoAtual >= limite) {
-                charCount.style.color = "red";
-                charCount.style.fontWeight = "bold";
+            // Muda a cor se estiver chegando perto do limite
+            if (currentLength >= 280) {
+                charCount.classList.add('text-red-500');
             } else {
-                charCount.style.color = "#666";
-                charCount.style.fontWeight = "normal";
+                charCount.classList.remove('text-red-500');
             }
         });
     </script>

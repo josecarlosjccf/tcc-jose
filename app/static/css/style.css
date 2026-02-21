@@ -6,7 +6,6 @@
     font-family: Arial, sans-serif;
 }
 
-/* Estrutura principal da página */
 body {
     display: flex;
     flex-direction: column;
@@ -15,34 +14,49 @@ body {
     color: #333;
 }
 
-/* Barra de navegação */
+/* Header e Nav */
 header {
-    background-color: #3f51b5; /* Azul índigo */
+    background-color: #3f51b5; /* Azul do tema */
     color: white;
     padding: 15px 20px;
 }
 
-nav h1 {
-    font-size: 1.2rem;
+nav {
+    display: flex;
+    justify-content: center; /* Centraliza o título */
+    align-items: center;
 }
 
-/* Área central onde fica o formulário */
+nav h1 {
+    font-size: 1.4rem;
+}
+
+/* Corpo principal */
 main {
-    flex: 1; /* Faz o main preencher o espaço vazio, empurrando o footer para baixo */
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
 
-/* Estilo do formulário */
-form {
+/* Formulário e Carregamento */
+form, #loading_message {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+}
+
+#loading_message {
+    text-align: center;
+}
+
+#loading_message h2 {
+    color: #3f51b5;
+    margin-bottom: 10px;
 }
 
 .input-group {
@@ -61,13 +75,9 @@ textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    resize: vertical;
 }
 
-textarea {
-    resize: vertical; /* Permite redimensionar apenas para baixo */
-}
-
-/* Contador de caracteres */
 .contador {
     text-align: right;
     font-size: 0.85rem;
@@ -75,7 +85,6 @@ textarea {
     margin-top: 5px;
 }
 
-/* Botão de envio */
 button {
     width: 100%;
     padding: 12px;
@@ -83,16 +92,73 @@ button {
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #303f9f;
 }
 
-/* Rodapé */
+/* Resultados */
+.relatorio-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.relatorio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.btn-voltar {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-voltar:hover {
+    background-color: #ccc;
+}
+
+.conteudo-ia h2 {
+    color: #3f51b5;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.conteudo-ia p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.conteudo-ia ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.conteudo-ia li {
+    line-height: 1.6;
+    margin-bottom: 5px;
+    text-align: justify;
+}
+
+/* Footer */
 footer {
     background-color: #212121;
     color: #ccc;
