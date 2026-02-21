@@ -27,28 +27,55 @@ O sistema utiliza:
 
 O projeto adota o padrão de separação de responsabilidades (MVC adaptado), dividindo rotas, regras de negócio e interfaces visuais:
 
+```
 tcc-jose/
-├── run.py                    # Arquivo principal que inicializa o servidor web.
-├── .env                      # Arquivo oculto de variáveis de ambiente (Chave da API).
-├── requirements.txt          # Lista de dependências (Pandas, Flask, google-genai, etc).
-├── README.md                 # Documentação do projeto.
 │
-└── app/                      # Módulo central da aplicação Flask.
-    ├── __init__.py           # Inicialização do módulo app.
-    ├── routes.py             # Controlador (Controller): gerencia as URLs e rotas web.
+├── run.py
+│   # Arquivo principal que inicializa o servidor web.
+│
+├── .env
+│   # Arquivo oculto de variáveis de ambiente (Chave da API).
+│
+├── requirements.txt
+│   # Lista de dependências (Pandas, Flask, google-genai, etc).
+│
+├── README.md
+│   # Documentação do projeto.
+│
+└── app/
     │
-    ├── services/             # Regras de Negócio (Services).
-    │   ├── __init__.py       # Identificador do pacote Python.
-    │   ├── data_analyzer.py  # Ingestão do Pandas, Data Wrangling e chamada da API.
-    │   └── prompt_builder.py # Isolamento das regras de Engenharia de Prompt.
+    ├── __init__.py
+    │   # Inicialização do módulo app.
     │
-    ├── templates/            # Interfaces de Usuário (Views - HTML).
-    │   ├── index.html        # Página principal (Upload do arquivo e instrução).
-    │   └── resultado.html    # Página do relatório final processado pela IA.
+    ├── routes.py
+    │   # Controlador (Controller): gerencia as URLs e rotas web.
     │
-    └── static/               # Arquivos estáticos.
+    ├── services/
+    │   │
+    │   ├── __init__.py
+    │   │   # Identificador do pacote Python.
+    │   │
+    │   ├── data_analyzer.py
+    │   │   # Ingestão do Pandas, Data Wrangling e chamada da API.
+    │   │
+    │   └── prompt_builder.py
+    │       # Isolamento das regras de Engenharia de Prompt.
+    │
+    ├── templates/
+    │   │
+    │   ├── index.html
+    │   │   # Página principal (Upload do arquivo e instrução).
+    │   │
+    │   └── resultado.html
+    │       # Página do relatório final processado pela IA.
+    │
+    └── static/
+        │
         └── css/
-            └── style.css     # Folha de estilos padronizada para as telas.
+            │
+            └── style.css
+                # Folha de estilos padronizada para as telas.
+```
 
 ---
 
