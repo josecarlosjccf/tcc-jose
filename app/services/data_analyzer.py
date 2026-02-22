@@ -10,52 +10,52 @@ class DataAnalyzer:
         self.model_name = f'gemini-{versao_modelo}-flash'
 
     def carregar_planilha(self, caminho_arquivo: str):
-        if caminho_arquivo.lower().endswith(('.csv', '.txt')):
+        caminho_lower = caminho_arquivo.lower()
+        if caminho_lower.endswith(('.csv', '.txt')):
             df = pd.read_csv(caminho_arquivo)
-        elif caminho_arquivo.lower().endswith(('.xlsx', '.xls')):
+        elif caminho_lower.endswith(('.xlsx', '.xls')):
             df = pd.read_excel(caminho_arquivo)
         else:
             raise ValueError("Formato de arquivo não suportado.")
             
-        df.columns = [str(col).strip().replace('\n', ' ') for col in df.columns]
+        # Limpeza vetorizada nativa do Pandas (mais limpo e eficiente)
+        df.columns = df.columns.astype(str).str.strip().str.replace('\n', ' ')
         return df
 
     def limpar_markdown_para_html(self, texto_markdown: str) -> str:
+        # Limpeza e formatação de Markdown para tags HTML
         texto = re.sub(r'^#+\s*', '', texto_markdown, flags=re.MULTILINE)
         texto = re.sub(r'\*\*(SEÇÃO \d+.*?)\*\*', r'\1', texto, flags=re.IGNORECASE)
         texto = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', texto)
         
+        # Isola o texto a partir da SEÇÃO 1, se existir
         idx = texto.find('SEÇÃO 1')
-        if idx != -1:
-            texto = texto[idx:]
+        texto = texto[idx:] if idx != -1 else texto
 
-        linhas = texto.split('\n')
         html_saida = []
         in_list = False
 
-        for linha in linhas:
-            linha = linha.strip()
-            if not linha:
-                continue
+        # Itera apenas sobre linhas que não estão vazias após o strip
+        linhas_validas = [l.strip() for l in texto.split('\n') if l.strip()]
 
+        for linha in linhas_validas:
             if linha.upper().startswith('SEÇÃO'):
-                if in_list:
+                if in_list: 
                     html_saida.append('</ul>')
                     in_list = False
-                html_saida.append(f'<h2 style="color: #2c3e50; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 5px;">{linha}</h2>')
+                html_saida.append(f'<h2 style="color: #3f51b5; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 5px;">{linha}</h2>')
             
-            elif linha.startswith('* ') or linha.startswith('- '):
+            elif linha.startswith(('* ', '- ')):
                 if not in_list:
                     html_saida.append('<ul style="margin-bottom: 15px; padding-left: 20px;">')
                     in_list = True
-                item_texto = linha[2:].strip()
-                html_saida.append(f'<li style="margin-bottom: 8px; line-height: 1.6;">{item_texto}</li>')
+                html_saida.append(f'<li style="margin-bottom: 8px; line-height: 1.6;">{linha[2:].strip()}</li>')
             
             else:
-                if in_list:
+                if in_list: 
                     html_saida.append('</ul>')
                     in_list = False
-                html_saida.append(f'<p style="margin-bottom: 15px; line-height: 1.6;">{linha}</p>')
+                html_saida.append(f'<p style="margin-bottom: 15px; line-height: 1.6; text-align: justify;">{linha}</p>')
 
         if in_list:
             html_saida.append('</ul>')
@@ -63,43 +63,58 @@ class DataAnalyzer:
         return '\n'.join(html_saida)
 
     def gerar_perfil_pandas(self, df):
-        # Motor Pandas: Gera as estatísticas matemáticas e contagens exatas
+        """
+        Delegação Híbrida: O Pandas gera as estatísticas globais e calcula 
+        antecipadamente a média individual de CADA item. Isso fornece à IA 
+        os dados exatos para responder a qualquer ranking solicitado pelo utilizador.
+        """
         perfil = ["=== RESUMO ESTATÍSTICO MATEMÁTICO (Gerado pelo Python) ==="]
         
-        # Só gera o describe se existirem colunas numéricas
         colunas_numericas = df.select_dtypes(include=['number']).columns
+        # Pré-filtra apenas as colunas de texto que são categorias válidas (entre 2 e 49 itens únicos)
+        colunas_texto = [col for col in df.select_dtypes(include=['object', 'category']).columns if 1 < df[col].nunique() < 50]
+
+        # 1. Estatísticas Globais
         if not colunas_numericas.empty:
-            perfil.append(df.describe().to_csv())
+            perfil.extend(["\n--- 1. ESTATÍSTICAS GERAIS ---", df.describe().to_string()])
         
-        perfil.append("\n=== TOP 5 VALORES MAIS FREQUENTES (Colunas Categóricas/Texto) ===")
-        colunas_texto = df.select_dtypes(include=['object', 'category']).columns
-        for col in colunas_texto:
-            top_valores = df[col].value_counts().head(5)
-            perfil.append(f"\nColuna '{col}':\n{top_valores.to_string()}")
-            
+        # 2. Contagem de Frequência
+        if colunas_texto:
+            perfil.append("\n--- 2. CONTAGEM DE FREQUÊNCIA ---")
+            for col in colunas_texto:
+                perfil.append(f"\nContagem para '{col}':\n{df[col].value_counts().to_string()}")
+
+            # 3. Cardápio de Médias Agrupadas (Executado apenas se também houver números)
+            if not colunas_numericas.empty:
+                perfil.extend([
+                    "\n--- 3. MÉDIAS EXATAS POR ITEM ---",
+                    "ATENÇÃO IA: Use EXATAMENTE os valores desta lista abaixo para responder a solicitações sobre os melhores, piores ou notas de itens específicos."
+                ])
+                for col_texto in colunas_texto:
+                    for col_num in colunas_numericas:
+                        media_agrupada = df.groupby(col_texto)[col_num].mean().sort_values(ascending=False)
+                        perfil.append(f"\nMédia de '{col_num}' agrupada por '{col_texto}':\n{media_agrupada.to_string()}")
+                        
         return "\n".join(perfil)
 
     def analisar_dados(self, df, instrucao_usuario: str, instrucoes_extras: str = ""):
         info_dados = f"Dimensão Total: {df.shape[0]} linhas x {df.shape[1]} colunas."
         
-        # 1. Pré-processamento exato com Pandas
+        # Pré-processamento matemático e agrupamentos
         resumo_estatistico = self.gerar_perfil_pandas(df)
         
-        # 2. Base de dados completa para a IA ler TODOS os comentários sem pular nenhum
+        # Base completa em formato CSV para a leitura da IA
         dados_completos = df.to_csv(index=False)
 
-        # Monta o prompt
         prompt = construir_prompt_mestre(
             instrucao_usuario, info_dados, resumo_estatistico, dados_completos, instrucoes_extras
         )
 
-        # 3. Chama a IA com a trava de segurança contra alucinações (temperature=0.1)
+        # Chamada à API (RNF02: Temperature = 0.1 garante respostas determinísticas)
         response = self.client.models.generate_content(
             model=self.model_name,
             contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.1  
-            )
+            config=types.GenerateContentConfig(temperature=0.1)
         )
         
         return self.limpar_markdown_para_html(response.text)
