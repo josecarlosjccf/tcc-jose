@@ -1,3 +1,4 @@
+#Dependências necessárias para o projeto
 google-genai
 pandas
 openpyxl
