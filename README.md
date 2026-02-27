@@ -107,7 +107,7 @@ cd tcc-jose
 
 ### ✅ 2. Pré-requisitos
 
-Instale o **Python 3.12.9**.
+Instale o **Python 3.12.9** ou superior.
 
 ---
 
