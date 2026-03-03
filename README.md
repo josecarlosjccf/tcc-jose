@@ -1,85 +1,105 @@
-# 📊 Analisador de Dados Python/Gemini
+# 📊 Analisador Inteligente de Dados com IA (Python + Gemini)
 
-**Trabalho de Conclusão de Curso (TCC)** – Bacharelado em Sistemas de Informação (2026)  
-**Autor:** José Carlos Cândido Ferreira  
+<p align="center">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzQ4ZzVnNnZpN3VxZmQ3NmRxb3E2c2Jwd2R0c3M2Y3Q2YjQ1eWJ6eiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0HlBO7eyXzSZkJri/giphy.gif" width="250px">
+</p>
+
+<p align="center">
+  <b>Trabalho de Conclusão de Curso (TCC)</b><br>
+  Bacharelado em Sistemas de Informação – 2026<br>
+  <b>Autor:</b> José Carlos Cândido Ferreira
+</p>
+
+---
+
+## 🧠 Stack Tecnológica
 
 <div align="center">
 
-  <a href="https://www.python.org/" target="_blank">
-    <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  </a>
-
-  <a href="https://flask.palletsprojects.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
-  </a>
-
-  <a href="https://pandas.pydata.org/" target="_blank">
-    <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
-  </a>
-
-  <a href="https://ai.google.dev/" target="_blank">
-    <img src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white" alt="Gemini">
-  </a>
-
-  <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank">
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
-  </a>
-
-  <a href="https://tailwindcss.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
-  </a>
-
-</div>
-
+<img src="https://skillicons.dev/icons?i=python,flask,html,css,git" />
 <br>
+<img src="https://img.shields.io/badge/Pandas-Data%20Processing-150458?style=for-the-badge&logo=pandas">
+<img src="https://img.shields.io/badge/Google%20Gemini-Generative%20AI-8E75B2?style=for-the-badge">
+<img src="https://img.shields.io/badge/MVC-Architecture-blue?style=for-the-badge">
 
-<div align="center">
-  <img src="interface.png" alt="Interface do Analisador de Dados" width="800px" style="border-radius: 8px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1);">
 </div>
 
 ---
 
-## 💻 Sobre o Projeto
+## 🎥 Demonstração da Interface
 
-Este protótipo é uma aplicação web desenvolvida em **Python (Flask)** projetada para otimizar o fluxo de *reporting* e análise na gestão de produtos e serviços.
+<p align="center">
+  <img src="interface.png" width="850px" style="border-radius: 12px;">
+</p>
 
-O sistema resolve o desafio da interpretação manual de grandes conjuntos de dados textuais não estruturados, como feedbacks, avaliações e comentários qualitativos.
-
-Através da integração do **Pandas** (para pré-processamento e manipulação de planilhas) com a **API do Google Gemini** (Inteligência Artificial Generativa), a ferramenta lê arquivos `.csv` e `.xlsx`, aplica técnicas rigorosas de Engenharia de Prompt e devolve um relatório analítico estruturado diretamente em uma interface HTML.
-
----
-
-## 🛡️ Diferencial Técnico: Mitigação de Alucinações
-
-O código foi arquitetado com travas de segurança rigorosas (RNF02) para garantir que a IA atue de forma puramente analítica e factual.
-
-O sistema utiliza:
-
-1. **Grounding (Ancoragem):** Instruções no prompt que proíbem a invenção de dados.  
-2. **Contexto Integral:** Uso da função `to_csv(index=False)` no Pandas para injetar 100% dos dados na memória da IA, evitando cortes na leitura de planilhas extensas.  
-3. **Hiperparâmetros Determinísticos:** Chamada da API configurada com `temperature=0.1`, reduzindo drasticamente a criatividade da rede neural e aumentando a previsibilidade das respostas.
+> 💡 Dica: você pode gravar um GIF curto da aplicação rodando (com ScreenToGif) e substituir a imagem por um `.gif` animado para deixar ainda mais profissional.
 
 ---
 
-## 🗂️ Arquitetura de Pastas
+# 💻 Sobre o Projeto
 
-O projeto adota o padrão de separação de responsabilidades (MVC adaptado), dividindo rotas, regras de negócio e interfaces visuais:
+O **Analisador Inteligente de Dados** é uma aplicação web desenvolvida com **Python + Flask**, criada para automatizar a interpretação de grandes volumes de dados textuais não estruturados.
+
+O sistema resolve um problema real:
+
+> 🔎 Transformar feedbacks, avaliações e comentários qualitativos em relatórios estratégicos estruturados automaticamente.
+
+A aplicação integra:
+
+- 📊 **Pandas** → Leitura e pré-processamento de `.csv` e `.xlsx`
+- 🤖 **Google Gemini API** → Análise com IA Generativa
+- 🌐 **HTML + CSS (Tailwind)** → Interface web responsiva
+
+O resultado é um **relatório analítico estruturado em tempo real**, pronto para tomada de decisão.
+
+---
+
+# 🛡️ Diferencial Técnico — Mitigação de Alucinações da IA
+
+Este projeto foi arquitetado com foco em **confiabilidade e precisão analítica**, implementando controles técnicos robustos:
+
+### 🔐 1. Grounding (Ancoragem)
+
+O prompt contém instruções explícitas proibindo a invenção de dados.
+
+### 📄 2. Contexto Integral
+
+Uso de:
+
+```python
+df.to_csv(index=False)
+```
+
+Garantindo que **100% dos dados** sejam enviados para análise.
+
+### 🎛️ 3. Configuração Determinística
+
+Chamada da API com:
+
+```python
+temperature=0.1
+```
+
+Reduzindo criatividade e aumentando previsibilidade e consistência.
+
+---
+
+# 🏗️ Arquitetura do Projeto
+
+Organização baseada em **MVC Adaptado**, separando responsabilidades:
 
 ```text
 tcc-jose/
 │
-├── run.py                 # Inicializa o servidor web
-├── .env                   # Variáveis de ambiente (Chave da API)
-├── requirements.txt       # Dependências do projeto
-├── README.md              # Documentação oficial
-├── interface.png          # Print da tela principal
+├── run.py
+├── .env
+├── requirements.txt
+├── README.md
+├── interface.png
 │
 └── app/
-    ├── __init__.py
     ├── routes.py
-    │
     ├── services/
-    │   ├── __init__.py
     │   ├── data_analyzer.py
     │   └── prompt_builder.py
     │
@@ -92,11 +112,17 @@ tcc-jose/
             └── style.css
 ```
 
+📌 Separação clara entre:
+- Rotas
+- Regras de negócio
+- Construção de prompt
+- Interface
+
 ---
 
-## 🚀 Como Configurar e Rodar o Projeto
+# 🚀 Como Executar o Projeto
 
-### ✅ 1. Clonar o Repositório
+## 1️⃣ Clonar o Repositório
 
 ```bash
 git clone https://github.com/josecarlosjccf/tcc-jose.git
@@ -105,13 +131,7 @@ cd tcc-jose
 
 ---
 
-### ✅ 2. Pré-requisitos
-
-Instale o **Python 3.12.9** ou superior.
-
----
-
-### 📦 3. Instalar Dependências
+## 2️⃣ Instalar Dependências
 
 ```bash
 pip install -r requirements.txt
@@ -119,26 +139,26 @@ pip install -r requirements.txt
 
 ---
 
-### 🔐 4. Configurar Variáveis de Ambiente
+## 3️⃣ Configurar Variáveis de Ambiente
 
-Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+Crie um `.env`:
 
 ```env
-GEMINI_API_KEY="COLE_AQUI_A_SUA_CHAVE_GERADA"
+GEMINI_API_KEY="SUA_CHAVE_AQUI"
 GEMINI_VERSION="2.5"
 ```
 
-⚠️ O `.env` está no `.gitignore` e não deve ser enviado ao GitHub.
+⚠️ Nunca envie o `.env` para o GitHub.
 
 ---
 
-### ▶️ 5. Executar o Servidor
+## 4️⃣ Executar
 
 ```bash
 python run.py
 ```
 
-Acesse no navegador:
+Acesse:
 
 ```
 http://localhost:5000
@@ -146,47 +166,54 @@ http://localhost:5000
 
 ---
 
-## 💡 Como Usar o Sistema
+# 🧩 Fluxo de Uso do Sistema
 
-### 1️⃣ Upload do Arquivo
+### 📤 1. Upload
 
-Selecione um arquivo `.csv` ou `.xlsx`.
+Envie um arquivo `.csv` ou `.xlsx`.
 
-### 2️⃣ Escrever a Instrução
+### ✍️ 2. Instrução
 
-Digite exatamente o que deseja que a IA investigue.
+Descreva exatamente o que deseja investigar.
 
-**Exemplo:**
+Exemplo:
 
-> "Leia as avaliações desta planilha e identifique qual é a principal reclamação sobre a entrega"
+> "Identifique a principal reclamação sobre atraso na entrega."
 
-### 3️⃣ Gerar Relatório
+### 📊 3. Relatório Gerado
 
-Clique em **Gerar Relatório Analítico**.
-
-### 4️⃣ Visualizar Dashboard
-
-O sistema exibirá um relatório estruturado contendo:
+O sistema entrega:
 
 - 📌 Resumo Executivo  
-- 📊 Principais Descobertas  
-- 🎯 Resposta Direta ao Pedido  
+- 📊 Principais Insights  
+- 🎯 Resposta Direta  
 - 🚀 Recomendações Estratégicas  
 
 ---
 
-## 🎓 Objetivo Acadêmico
+# 🎓 Contribuição Acadêmica
 
-Este projeto demonstra a aplicação prática de:
+Este projeto demonstra domínio em:
 
-- Engenharia de Prompt  
-- Integração de APIs de IA Generativa  
-- Manipulação de Dados com Pandas  
-- Arquitetura MVC  
-- Segurança de Aplicações  
+- Engenharia de Prompt
+- Integração de APIs REST
+- Manipulação de Dados com Pandas
+- Arquitetura MVC
+- Segurança Aplicacional
+- IA Generativa aplicada a negócios
 
 ---
 
-## 📌 Licença
+# 📈 Possíveis Evoluções Futuras
+
+- Dashboard com gráficos interativos
+- Armazenamento de histórico de análises
+- Autenticação de usuários
+- Deploy em nuvem (AWS ou GCP)
+- Containerização com Docker
+
+---
+
+# 📜 Licença
 
 Projeto acadêmico desenvolvido para fins educacionais.
