@@ -1,10 +1,6 @@
 # 📊 Analisador Inteligente de Dados com IA (Python + Gemini)
 
 <p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzQ4ZzVnNnZpN3VxZmQ3NmRxb3E2c2Jwd2R0c3M2Y3Q2YjQ1eWJ6eiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0HlBO7eyXzSZkJri/giphy.gif" width="250px">
-</p>
-
-<p align="center">
   <b>Trabalho de Conclusão de Curso (TCC)</b><br>
   Bacharelado em Sistemas de Informação – 2026<br>
   <b>Autor:</b> José Carlos Cândido Ferreira
@@ -16,11 +12,29 @@
 
 <div align="center">
 
-<img src="https://skillicons.dev/icons?i=python,flask,html,css,git" />
-<br>
-<img src="https://img.shields.io/badge/Pandas-Data%20Processing-150458?style=for-the-badge&logo=pandas">
-<img src="https://img.shields.io/badge/Google%20Gemini-Generative%20AI-8E75B2?style=for-the-badge">
-<img src="https://img.shields.io/badge/MVC-Architecture-blue?style=for-the-badge">
+<a href="https://www.python.org/doc/essays/blurb/" target="_blank">
+  <img src="https://img.shields.io/badge/Python-Programação-3776AB?style=for-the-badge&logo=python&logoColor=white">
+</a>
+
+<a href="https://flask.palletsprojects.com/en/latest/quickstart/" target="_blank">
+  <img src="https://img.shields.io/badge/Flask-Framework%20Web-000000?style=for-the-badge&logo=flask&logoColor=white">
+</a>
+
+<a href="https://pandas.pydata.org/docs/getting_started/overview.html" target="_blank">
+  <img src="https://img.shields.io/badge/Pandas-Processamento%20de%20Dados-150458?style=for-the-badge&logo=pandas">
+</a>
+
+<a href="https://ai.google.dev/docs/gemini_api_overview" target="_blank">
+  <img src="https://img.shields.io/badge/Google%20Gemini-IA%20Generativa-8E75B2?style=for-the-badge">
+</a>
+
+<a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank">
+  <img src="https://img.shields.io/badge/HTML5-Estrutura%20Web-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+</a>
+
+<a href="https://tailwindcss.com/docs" target="_blank">
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-Estilização-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+</a>
 
 </div>
 
@@ -31,8 +45,6 @@
 <p align="center">
   <img src="interface.png" width="850px" style="border-radius: 12px;">
 </p>
-
-> 💡 Dica: você pode gravar um GIF curto da aplicação rodando (com ScreenToGif) e substituir a imagem por um `.gif` animado para deixar ainda mais profissional.
 
 ---
 
