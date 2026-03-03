@@ -13,27 +13,27 @@
 <div align="center">
 
 <a href="https://www.python.org/doc/essays/blurb/" target="_blank">
-  <img src="https://img.shields.io/badge/Python-Programação-3776AB?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
 </a>
 
 <a href="https://flask.palletsprojects.com/en/latest/quickstart/" target="_blank">
-  <img src="https://img.shields.io/badge/Flask-Framework%20Web-000000?style=for-the-badge&logo=flask&logoColor=white">
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white">
 </a>
 
 <a href="https://pandas.pydata.org/docs/getting_started/overview.html" target="_blank">
-  <img src="https://img.shields.io/badge/Pandas-Processamento%20de%20Dados-150458?style=for-the-badge&logo=pandas">
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas">
 </a>
 
 <a href="https://ai.google.dev/docs/gemini_api_overview" target="_blank">
-  <img src="https://img.shields.io/badge/Google%20Gemini-IA%20Generativa-8E75B2?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge">
 </a>
 
 <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML" target="_blank">
-  <img src="https://img.shields.io/badge/HTML5-Estrutura%20Web-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
 </a>
 
 <a href="https://tailwindcss.com/docs" target="_blank">
-  <img src="https://img.shields.io/badge/Tailwind%20CSS-Estilização-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
 </a>
 
 </div>
