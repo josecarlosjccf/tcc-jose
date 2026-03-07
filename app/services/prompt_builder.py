@@ -1,6 +1,7 @@
 import logging
+from textwrap import dedent
 
-# Configuração básica de log para registrar eventos e erros no terminal
+# Configuração básica de log para registrar eventos no terminal
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def construir_prompt_mestre(
@@ -11,44 +12,40 @@ def construir_prompt_mestre(
     instrucoes_extras: str = ""
 ) -> str:
     """
-    Constrói o prompt estruturado com validação de entradas e tratamento de erros.
-    Garante que a IA não seja acionada com parâmetros essenciais vazios.
+    Constrói o prompt estruturado aplicando as regras de segurança (RNF02).
+    Garante que a IA receba os dados mínimos para não inventar informações.
     """
     try:
         # =====================================================================
-        # 1. VALIDAÇÃO DE ENTRADAS (Tratamento de Erros de Input)
+        # 1. VALIDAÇÃO DE ENTRADAS ESSENCIAIS
         # =====================================================================
-        
-        # Impede a criação do prompt se não houver instrução do usuário
         if not instrucao_usuario or not instrucao_usuario.strip():
             raise ValueError("Erro Crítico: A instrução do usuário não pode estar vazia.")
             
-        # Impede a criação do prompt se a planilha estiver vazia
         if not dados_completos or not dados_completos.strip():
             raise ValueError("Erro Crítico: Os dados da planilha não podem estar vazios.")
             
-        # Se faltar info secundária, o sistema não cai, mas avisa no log do terminal
+        # Fallback para dados secundários (evita que o sistema caia por detalhes)
         if not info_dados:
-            logging.warning("Aviso: 'info_dados' está vazio. O prompt será gerado sem a dimensão da base.")
+            logging.warning("Aviso: 'info_dados' ausente. Usando valor padrão.")
             info_dados = "Dimensão da base não informada."
             
         if not resumo_estatistico:
-            logging.warning("Aviso: 'resumo_estatistico' está vazio. A IA analisará sem os cálculos do Pandas.")
-            resumo_estatistico = "Resumo estatístico prévio não disponível."
+            logging.warning("Aviso: 'resumo_estatistico' ausente. Analisando sem cálculos prévios.")
+            resumo_estatistico = "Resumo estatístico não disponível."
 
         # =====================================================================
         # 2. MONTAGEM SEGURA DO PROMPT
         # =====================================================================
-        
         prompt = f"""
         **CONTEXTO E REGRAS DE SEGURANÇA:** Você é um Analista de Dados Profissional. 
         
-        # REGRA MÁXIMA: 
-        # Não faça cálculos matemáticos complexos de contagem ou médias. O sistema (Python/Pandas) já fez o processamento numérico exato e gerou um "Resumo Estatístico" abaixo. Use os números desse resumo estatístico como verdade absoluta. Foque sua inteligência em cruzar esses números com a "Base de Dados Completa" para gerar insights executivos e interpretar os textos/comentários.
-        # NUNCA invente dados. Se a resposta não estiver nos dados, diga que não há informações suficientes.
+        # REGRA MÁXIMA (PREVENÇÃO DE ALUCINAÇÕES): 
+        # Não faça cálculos matemáticos de contagem ou médias. O sistema (Python/Pandas) já processou os números exatos e gerou o "Resumo Estatístico" abaixo. 
+        # Use esses números como verdade absoluta. Foque sua inteligência em cruzar os números com os textos da "Base de Dados Completa" para gerar insights executivos.
+        # NUNCA invente dados. Se a resposta não estiver no arquivo, diga que não há informações suficientes.
 
-        **ESTRUTURA DE SAÍDA OBRIGATÓRIA:** Retorne um texto em Markdown com 4 seções. Use negrito **texto** e listas - para clareza:
-
+        **ESTRUTURA DE SAÍDA OBRIGATÓRIA:** (Retorne em Markdown, usando negrito e listas):
         SEÇÃO 1: RESUMO EXECUTIVO DOS DADOS
         SEÇÃO 2: PRINCIPAIS DESCOBERTAS E TENDÊNCIAS
         SEÇÃO 3: RESPOSTA AO PEDIDO DO USUÁRIO
@@ -58,11 +55,11 @@ def construir_prompt_mestre(
         {info_dados}
 
         **1. RESUMO ESTATÍSTICO (GERADO PELO PANDAS):**
-        ```
+        ```text
         {resumo_estatistico}
         ```
         
-        **2. BASE DE DADOS COMPLETA (PARA ANÁLISE QUALITATIVA/TEXTUAL):**
+        **2. BASE DE DADOS COMPLETA (PARA ANÁLISE QUALITATIVA):**
         ```csv
         {dados_completos}
         ```
@@ -74,14 +71,14 @@ def construir_prompt_mestre(
         **IMPORTANTE:** Sua resposta DEVE começar IMEDIATAMENTE com 'SEÇÃO 1: RESUMO EXECUTIVO DOS DADOS'.
         """
         
-        logging.info("Prompt mestre construído com sucesso e pronto para envio.")
-        return prompt
+        logging.info("Prompt mestre construído com sucesso.")
+        
+        # O 'dedent' remove os recuos desnecessários do código, economizando tokens na API
+        return dedent(prompt).strip()
 
     except ValueError as ve:
-        # Captura erros de validação (ex: campos essenciais em branco)
-        logging.error(f"Falha de Validação na construção do prompt: {ve}")
+        logging.error(f"Falha de Validação no prompt: {ve}")
         raise
     except Exception as e:
-        # Captura erros imprevistos (ex: falha de memória ao processar string gigante)
         logging.critical(f"Erro inesperado no Prompt Builder: {e}")
         raise RuntimeError(f"Falha interna ao gerar o prompt estruturado: {e}")
