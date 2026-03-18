@@ -50,7 +50,7 @@
 
 # 💻 Sobre o Projeto
 
-O **Analisador Inteligente de Dados** é uma aplicação web desenvolvida com **Python + Flask**, criada para automatizar a interpretação de grandes volumes de dados textuais não estruturados.
+É uma aplicação web desenvolvida com **Python + Flask**, criada para automatizar a interpretação de grandes volumes de dados textuais não estruturados.
 
 O sistema resolve um problema real:
 
