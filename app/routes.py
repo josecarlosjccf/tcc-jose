@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 CHAVE_API = os.getenv("GEMINI_API_KEY")
-VERSAO_GEMINI = os.getenv("GEMINI_VERSION", "2.5")
+VERSAO_GEMINI = os.getenv("GEMINI_VERSION", "3.5")
 
 main_bp = Blueprint('main', __name__)
 UPLOAD_FOLDER = 'uploads'

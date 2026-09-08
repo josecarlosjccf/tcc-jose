@@ -157,7 +157,7 @@ Crie um `.env`:
 
 ```env
 GEMINI_API_KEY="SUA_CHAVE_AQUI"
-GEMINI_VERSION="2.5"
+GEMINI_VERSION="3.5"
 ```
 
 ⚠️ Nunca envie o `.env` para o GitHub.
