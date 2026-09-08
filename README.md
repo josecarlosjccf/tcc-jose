@@ -162,7 +162,7 @@ GEMINI_VERSION="versao_atual"
 
 > [!IMPORTANT]
 > **ATENÇÃO À VERSÃO DO GEMINI**
-> Para que a aplicação funcione corretamente, você deve **obrigatoriamente** manter a versão do modelo atualizada.
+> Para que a aplicação funcione corretamente, você deve **obrigatoriamente** manter a versão do modelo atualizada. **O valor deve ser um número** (por exemplo, `3.5`).
 > - No arquivo `.env`, atualize a variável `GEMINI_VERSION=""` de acordo com a versão atual da API do Gemini.
 > - No arquivo `app/routes.py` (na linha 8), certifique-se de que a variável `VERSAO_GEMINI =` esteja de acordo com a versão atual para funcionar.
 > 
