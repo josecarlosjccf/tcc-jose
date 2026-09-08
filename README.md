@@ -157,8 +157,16 @@ Crie um `.env`:
 
 ```env
 GEMINI_API_KEY="SUA_CHAVE_AQUI"
-GEMINI_VERSION="3.5"
+GEMINI_VERSION="versao_atual"
 ```
+
+> [!IMPORTANT]
+> **ATENÇÃO À VERSÃO DO GEMINI**
+> Para que a aplicação funcione corretamente, você deve **obrigatoriamente** manter a versão do modelo atualizada.
+> - No arquivo `.env`, atualize a variável `GEMINI_VERSION=""` de acordo com a versão atual da API do Gemini.
+> - No arquivo `app/routes.py` (na linha 8), certifique-se de que a variável `VERSAO_GEMINI =` esteja de acordo com a versão atual para funcionar.
+> 
+> *Como descobrir a versão atual?* Escreva para pessoa olhar a versão atual no chat oficial do Gemini (pergunte qual a versão atual do modelo) ou pesquise no Google por "current gemini api version".
 
 ⚠️ Nunca envie o `.env` para o GitHub.
 
